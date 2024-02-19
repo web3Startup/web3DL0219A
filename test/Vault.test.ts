@@ -7,16 +7,7 @@ describe("Vault", async () => {
     beforeEach(async () => {
         let fixture = await setupFixture();
         owner = fixture.owner;
-        vault = fixture.vault;
         ethx = fixture.ethx;
-    })
-    it("Vault.func => setMaxLeverage", async () => {
-        const v = vault;
-        expect(v.address).not.eq(AddressZero);
-        console.log(`${await v.getAmount()}`);
-        console.log(`${await v.getUnlockTime()}`);
-
-        await v.setFeeAddress(AddressZero);
     });
 
     it("check ETHX.FUNC", async () => {

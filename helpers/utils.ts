@@ -8,7 +8,6 @@ export const setupFixture = deployments.createFixture(async () => {
 export async function getContracts() {
     const chainId = await getChainId();
     const contracts: any = {
-        vault: await ethers.getContract<Vault>("Vault"),
         ethx: await ethers.getContract<ETHx>("ETHx"),
     };
 
