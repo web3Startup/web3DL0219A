@@ -15,6 +15,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@openzeppelin/contracts-upgradeable": "^4.8.0-rc.1",
     "@matterlabs/hardhat-zksync-deploy": "^0.6.3",
     "@matterlabs/hardhat-zksync-solc": "^0.3.14",
     "@matterlabs/hardhat-zksync-verify": "0.1.7",
