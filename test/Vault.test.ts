@@ -44,6 +44,8 @@ describe("Vault", async () => {
         await expect(a.updateBidIncrement(123)).to.be.ok;
 
         await a.addBid(0, {value: parseEther("0.001")});
+        await a.addBid(1, {value: parseEther("0.001")});
+        await a.addBid(2, {value: parseEther("0.001")});
     })
 });
 
