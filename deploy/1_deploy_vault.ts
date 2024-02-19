@@ -8,18 +8,19 @@ const func: DeployFunction = async function ({deployments, getNamedAccounts, net
     console.log(">> starting deploying on chainId:", chainId);
     console.log(">> deploying vault...");
 
-    // const Vault = await deploy("Vault", {
-    //     from: owner,
-    //     args: [],
-    //     log: true,
-    // });
-
     const ethx = await deploy("ETHx", {
         from: owner,
         args: [],
         log: true,
     });
     console.log(`ethx: ${ethx.address}`);
+
+    const auction = await deploy("Auction", {
+        from : owner,
+        args: [],
+        log: true,
+    });
+    console.log(`auction: ${auction.address}`);
 
 };
 export default func;

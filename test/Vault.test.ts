@@ -3,11 +3,12 @@ import {expect} from "chai";
 import {parseEther} from "ethers/lib/utils";
 
 describe("Vault", async () => {
-    let vault, ethx, owner;
+    let vault, ethx, auction, owner;
     beforeEach(async () => {
         let fixture = await setupFixture();
         owner = fixture.owner;
         ethx = fixture.ethx;
+        auction = fixture.auction;
     });
 
     it("check ETHX.FUNC", async () => {
@@ -25,5 +26,11 @@ describe("Vault", async () => {
         await e.grantRole(await e.BURNER_ROLE(), owner.address);
         await e.burnFrom(owner.address, parseEther("100"));
     });
+
+    it("check auction.func", async() => {
+        const a = auction;
+        await a.initialize(owner.address, ethx.address);
+        await expect(a.initialize(owner.address, ethx.address)).to.be.reverted;
+    })
 });
 

@@ -24,5 +24,13 @@ contract Auction is AccessControlUpgradeable, ReentrancyGuardUpgradeable{
     mapping(uint256 => LotItem) public lots;
     uint256 public constant MIN_AUCTION_DURATION = 7200;
 
-
+    function initialize(address _admin, address _staderConfig) external initializer{
+        __AccessControl_init();
+        __ReentrancyGuard_init();
+        staderConfig = IStaderConfig(_staderConfig);
+        duration = 2 * MIN_AUCTION_DURATION;
+        bidIncrement = 5e15;
+        nextLot = 1;
+        _grantRole(DEFAULT_ADMIN_ROLE, _admin);
+    }
 }
