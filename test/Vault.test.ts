@@ -42,6 +42,8 @@ describe("Vault", async () => {
 
         await expect(a.connect(user0).updateBidIncrement(123)).to.be.reverted;
         await expect(a.updateBidIncrement(123)).to.be.ok;
+
+        await a.addBid(0, {value: parseEther("0.001")});
     })
 });
 

@@ -1,11 +1,25 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.13;
+pragma solidity 0.8.16;
 import './interfaces/IStaderConfig.sol';
 import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 import '@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol';
 import '@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol';
 
 contract Auction is AccessControlUpgradeable, ReentrancyGuardUpgradeable{
+    // errors
+    error InSufficientETH();
+    error ETHWithdrawFailed();
+    error AuctionEnded();
+    error AuctionNotEnded();
+    error ShortDuration();
+    error notQualified();
+    error AlreadyClaimed();
+    error NoBidPlaced();
+    error BidWasSuccessful();
+    error InSufficientBid();
+    error LotWasAuctioned();
+    error SDTransferFailed();
+
     struct LotItem {
         uint256 startBlock;
         uint256 endBlock;
@@ -43,6 +57,17 @@ contract Auction is AccessControlUpgradeable, ReentrancyGuardUpgradeable{
         nextLot++;
     }
 
+    function addBid(uint256 lotId) external payable {
+        LotItem storage lotItem = lots[lotId];
+
+        uint256 totalUserBid = lotItem.bids[msg.sender] + msg.value;
+
+        lotItem.highestBidder = msg.sender;
+        lotItem.highestBidAmount = totalUserBid;
+        lotItem.bids[msg.sender] = totalUserBid;
+    }
+
+    /* governance */
     function updateStaderConfig(address _staderConfig) external onlyRole(DEFAULT_ADMIN_ROLE){
         staderConfig = IStaderConfig(_staderConfig);
     }
