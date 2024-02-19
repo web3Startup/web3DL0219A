@@ -3,10 +3,11 @@ import {expect} from "chai";
 import {parseEther} from "ethers/lib/utils";
 
 describe("Vault", async () => {
-    let vault, ethx, auction, owner;
+    let vault, ethx, auction, owner,user0;
     beforeEach(async () => {
         let fixture = await setupFixture();
         owner = fixture.owner;
+        user0 = fixture.user0;
         ethx = fixture.ethx;
         auction = fixture.auction;
     });
@@ -31,6 +32,16 @@ describe("Vault", async () => {
         const a = auction;
         await a.initialize(owner.address, ethx.address);
         await expect(a.initialize(owner.address, ethx.address)).to.be.reverted;
+        await a.createLot(parseEther("100"));
+
+        await expect(a.connect(user0).updateStaderConfig(user0.address)).to.be.reverted;
+        await expect(a.updateStaderConfig(user0.address)).to.be.ok;
+
+        await expect(a.connect(user0).updateDuration(100)).to.be.reverted;
+        await expect(a.updateDuration(100)).to.be.ok;
+
+        await expect(a.connect(user0).updateBidIncrement(123)).to.be.reverted;
+        await expect(a.updateBidIncrement(123)).to.be.ok;
     })
 });
 

@@ -13,7 +13,10 @@ export async function getContracts() {
     };
 
     let users: any = {
-        owner: await ethers.getNamedSigner("owner")
+        owner: await ethers.getNamedSigner("owner"),
+        user0: await ethers.getNamedSigner("user0"),
+        user1: await ethers.getNamedSigner("user1"),
+        user2: await ethers.getNamedSigner("user2"),
     }
     return {...contracts, ...users};
 }

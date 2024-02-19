@@ -33,4 +33,25 @@ contract Auction is AccessControlUpgradeable, ReentrancyGuardUpgradeable{
         nextLot = 1;
         _grantRole(DEFAULT_ADMIN_ROLE, _admin);
     }
+
+    function createLot(uint256 _sdAmount) external {
+        lots[nextLot].startBlock = block.number;
+        lots[nextLot].endBlock = block.number + duration;
+        lots[nextLot].sdAmount = _sdAmount;
+
+        // todo: add code to transfer token from msg.sender to this contract
+        nextLot++;
+    }
+
+    function updateStaderConfig(address _staderConfig) external onlyRole(DEFAULT_ADMIN_ROLE){
+        staderConfig = IStaderConfig(_staderConfig);
+    }
+
+    function updateDuration(uint256 _duration) external onlyRole(DEFAULT_ADMIN_ROLE){
+        duration = _duration;
+    }
+
+    function updateBidIncrement(uint256 _bidIncrement) external onlyRole(DEFAULT_ADMIN_ROLE){
+        bidIncrement = _bidIncrement;
+    }
 }
