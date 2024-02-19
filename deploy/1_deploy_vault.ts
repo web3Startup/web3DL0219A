@@ -4,6 +4,7 @@ const func: DeployFunction = async function ({deployments, getNamedAccounts, net
     const {deploy} = deployments;
     const {owner,deployer} = await getNamedAccounts();
     const chainId = await getChainId();
+    console.log(`deployer: ${deployer}`);
     console.log(">> starting deploying on chainId:", chainId);
     console.log(">> deploying vault...");
 
@@ -12,7 +13,14 @@ const func: DeployFunction = async function ({deployments, getNamedAccounts, net
         args: [],
         log: true,
     });
-    console.log(`deployer: ${deployer}`);
+
+    const ethx = await deploy("ETHx", {
+        from: owner,
+        args: [],
+        log: true,
+    });
+    console.log(`ethx: ${ethx.address}`);
+
 };
 export default func;
 func.tags = ["vault"];
