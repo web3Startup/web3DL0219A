@@ -3,13 +3,15 @@ import {expect} from "chai";
 import {parseEther} from "ethers/lib/utils";
 
 describe("Vault", async () => {
-    let vault, ethx, auction, owner,user0;
+    let vault, ethx, auction, orc, owner,user0;
     beforeEach(async () => {
         let fixture = await setupFixture();
         owner = fixture.owner;
         user0 = fixture.user0;
+
         ethx = fixture.ethx;
         auction = fixture.auction;
+        orc = fixture.orc;
     });
 
     it("check ETHX.FUNC", async () => {
@@ -46,6 +48,19 @@ describe("Vault", async () => {
         await a.addBid(0, {value: parseEther("0.001")});
         await a.addBid(1, {value: parseEther("0.001")});
         await a.addBid(2, {value: parseEther("0.001")});
-    })
+    });
+
+    it("check ORC.func", async() => {
+        const o = orc;
+        await o.initialize(owner.address, ethx.address);
+
+        await expect(o.initialize(owner.address, ethx.address)).to.be.reverted;
+
+        await o.depositFor(owner.address, {value: parseEther("0.001")});
+        await o.claim();
+
+        await expect(o.connect(user0).updateStaderConfig(ethx.address)).to.be.reverted;
+        await expect(o.updateStaderConfig(ethx.address)).to.be.ok;
+    });
 });
 

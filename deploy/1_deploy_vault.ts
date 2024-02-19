@@ -22,6 +22,12 @@ const func: DeployFunction = async function ({deployments, getNamedAccounts, net
     });
     console.log(`auction: ${auction.address}`);
 
+    const orc = await deploy("OperatorRewardsCollector", {
+        from : owner,
+        args: [],
+        log: true,
+    });
+    console.log(`orc: ${orc.address}`);
 };
 export default func;
 func.tags = ["vault"];
