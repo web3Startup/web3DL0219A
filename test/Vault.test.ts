@@ -87,6 +87,13 @@ describe("Vault", async () => {
         await p.updateStaderConfig(owner.address);
         await expect(p.connect(user0).updateStaderConfig(owner.address)).to.be.reverted;
         await expect(p.updateStaderConfig(AddressZero)).to.be.reverted;
+
+        const pubkey = "0x123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0";
+        await expect(
+            p.calculateMissedAttestationPenalty(pubkey))
+            .to.be.reverted;
+
+        await expect(p.getAdditionalPenaltyAmount(pubkey)).to.be.reverted;
     });
 });
 

@@ -3,6 +3,7 @@ pragma solidity ^0.8.13;
 
 import './library/UtilLib.sol';
 import './interfaces/IStaderConfig.sol';
+import './interfaces/IStaderOracle.sol';
 import '@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol';
 import '@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol';
 
@@ -58,5 +59,16 @@ contract Penalty is AccessControlUpgradeable, ReentrancyGuardUpgradeable {
     function updateStaderConfig(address _staderConfig) external onlyRole(MANAGER_ROLE) {
         UtilLib.checkNonZeroAddress(_staderConfig);
         staderConfig = IStaderConfig(_staderConfig);
+    }
+
+    /* views */
+    function calculateMissedAttestationPenalty(bytes32 _pubkeyRoot) public view returns(uint256) {
+        return
+            IStaderOracle(staderConfig.getStaderOracle()).missedAttestationPenalty(_pubkeyRoot) *
+            missedAttestationPenaltyPerStrike;
+    }
+
+    function getAdditionalPenaltyAmount(bytes calldata _pubkey) external view returns(uint256) {
+        return additionalPenaltyAmount[UtilLib.getPubkeyRoot(_pubkey)];
     }
 }
