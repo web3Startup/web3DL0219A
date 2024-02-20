@@ -70,16 +70,7 @@ interface INodeRegistry {
 
 
     // returns the operator struct given operator Id
-    function operatorStructById(uint256)
-        external
-        view
-        returns (
-            bool active,
-            bool optedForSocializingPool,
-            string calldata operatorName,
-            address payable operatorRewardAddress,
-            address operatorAddress
-        );
+
 
     // Returns the last block the operator changed the opt-in status for socializing pool
     function getSocializingPoolStateChangeBlock(uint256 _operatorId) external view returns (uint256);
@@ -114,7 +105,7 @@ interface INodeRegistry {
 
     function getOperatorTotalKeys(uint256 _operatorId) external view returns (uint256 totalKeys);
 
-    function operatorIDByAddress(address) external view returns (uint256);
+
 
     function getOperatorRewardAddress(uint256 _operatorId) external view returns (address payable);
 
@@ -138,7 +129,7 @@ interface INodeRegistry {
 
 
 
-    function validatorIdsByOperatorId(uint256, uint256) external view returns (uint256);
+
 
     //Getters - param
     function verifiedKeyBatchSize() external view returns (uint256);
@@ -158,5 +149,13 @@ interface INodeRegistry {
         uint256 withdrawnTime
     );
     function validatorIdByPubkey(bytes calldata _pubkey) external view returns (uint256);
-
+    function operatorStructById(uint256) external view returns (
+        bool active,
+        bool optedForSocializingPool,
+        string calldata operatorName,
+        address payable operatorRewardAddress,
+        address operatorAddress
+    );
+    function operatorIDByAddress(address) external view returns (uint256);
+    function validatorIdsByOperatorId(uint256, uint256) external view returns (uint256);
 }

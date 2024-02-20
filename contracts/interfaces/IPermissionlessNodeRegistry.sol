@@ -31,7 +31,7 @@ interface IPermissionlessNodeRegistry {
 
     // getters
 
-    function queuedValidators(uint256) external view returns (uint256);
+
 
     function nodeELRewardVaultByOperatorId(uint256) external view returns (address);
 
@@ -76,4 +76,7 @@ interface IPermissionlessNodeRegistry {
     function pause() external;
 
     function unpause() external;
+
+    /* mappings */
+    function queuedValidators(uint256) external view returns (uint256);
 }

@@ -50,6 +50,10 @@ abstract contract PermissionlessNodeRegistry is
     /* @inheritdoc INodeRegistry.sol */
     mapping(uint256 => Validator) public override validatorRegistry;
     mapping(bytes => uint256) public override validatorIdByPubkey;
+    mapping(uint256 => Operator) public override operatorStructById;
+    mapping(address => uint256) public override operatorIDByAddress;
+    mapping(uint256 => uint256[]) public override validatorIdsByOperatorId;
 
-
+    /* @inheritdoc IPermissionlessNodeRegistry */
+    mapping(uint256 => uint256) public override queuedValidators;
 }
