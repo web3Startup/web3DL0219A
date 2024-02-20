@@ -1,5 +1,5 @@
 import {deployments, ethers, getChainId} from "hardhat";
-import {Auction, ETHx, OperatorRewardsCollector} from "../typechain";
+import {Auction, ETHx, OperatorRewardsCollector, Penalty} from "../typechain";
 export const {AddressZero, MaxInt256: ApproveAmount} = ethers.constants
 export const setupFixture = deployments.createFixture(async () => {
     await deployments.fixture();
@@ -11,6 +11,7 @@ export async function getContracts() {
         ethx: await ethers.getContract<ETHx>("ETHx"),
         auction: await ethers.getContract<Auction>("Auction"),
         orc : await ethers.getContract<OperatorRewardsCollector>("OperatorRewardsCollector"),
+        penalty: await ethers.getContract<Penalty>("Penalty"),
     };
 
     let users: any = {

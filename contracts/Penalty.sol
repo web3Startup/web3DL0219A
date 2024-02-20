@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.13;
 
+import './library/UtilLib.sol';
 import './interfaces/IStaderConfig.sol';
 import '@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol';
 import '@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol';
@@ -23,7 +24,7 @@ contract Penalty is AccessControlUpgradeable, ReentrancyGuardUpgradeable {
         address _admin,
         address _staderConfig,
         address _ratedOracleAddress
-    ) external {
+    ) initializer external {
 
         __AccessControl_init_unchained();
         __ReentrancyGuard_init();
@@ -50,10 +51,12 @@ contract Penalty is AccessControlUpgradeable, ReentrancyGuardUpgradeable {
     }
 
     function updateRatedOracleAddress(address _ratedOracleAddress) external onlyRole(MANAGER_ROLE) {
+        UtilLib.checkNonZeroAddress(_ratedOracleAddress);
         ratedOracleAddress = _ratedOracleAddress;
     }
 
     function updateStaderConfig(address _staderConfig) external onlyRole(MANAGER_ROLE) {
+        UtilLib.checkNonZeroAddress(_staderConfig);
         staderConfig = IStaderConfig(_staderConfig);
     }
 }

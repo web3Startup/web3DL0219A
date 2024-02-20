@@ -3,7 +3,7 @@ import {expect} from "chai";
 import {parseEther} from "ethers/lib/utils";
 
 describe("Vault", async () => {
-    let vault, ethx, auction, orc, owner,user0;
+    let vault, ethx, auction, orc, penalty, owner,user0;
     beforeEach(async () => {
         let fixture = await setupFixture();
         owner = fixture.owner;
@@ -12,6 +12,7 @@ describe("Vault", async () => {
         ethx = fixture.ethx;
         auction = fixture.auction;
         orc = fixture.orc;
+        penalty = fixture.penalty;
     });
 
     it("check ETHX.FUNC", async () => {
@@ -61,6 +62,31 @@ describe("Vault", async () => {
 
         await expect(o.connect(user0).updateStaderConfig(ethx.address)).to.be.reverted;
         await expect(o.updateStaderConfig(ethx.address)).to.be.ok;
+    });
+
+    it("check Penalty.func", async() => {
+        const p = penalty;
+
+        await p.initialize(owner.address, ethx.address, ethx.address);
+        await expect(p.initialize(owner.address, ethx.address, ethx.address)).to.be.reverted;
+
+        await p.grantRole(await p.MANAGER_ROLE(), owner.address);
+        await p.updateMEVTheftPenaltyPerStrike(0);
+        await expect(p.connect(user0).updateMEVTheftPenaltyPerStrike(0)).to.be.reverted;
+
+        await p.updateMissedAttestationPenaltyPerStrike(0);
+        await expect(p.connect(user0).updateMissedAttestationPenaltyPerStrike(0)).to.be.reverted;
+
+        await p.updateValidatorExitPenaltyThreshold(0);
+        await expect(p.connect(user0).updateValidatorExitPenaltyThreshold(0)).to.be.reverted;
+
+        await p.updateRatedOracleAddress(owner.address);
+        await expect(p.connect(user0).updateRatedOracleAddress(owner.address)).to.be.reverted;
+        await expect(p.updateRatedOracleAddress(AddressZero)).to.be.reverted;
+
+        await p.updateStaderConfig(owner.address);
+        await expect(p.connect(user0).updateStaderConfig(owner.address)).to.be.reverted;
+        await expect(p.updateStaderConfig(AddressZero)).to.be.reverted;
     });
 });
 

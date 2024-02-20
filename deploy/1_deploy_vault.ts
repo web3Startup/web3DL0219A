@@ -28,6 +28,13 @@ const func: DeployFunction = async function ({deployments, getNamedAccounts, net
         log: true,
     });
     console.log(`orc: ${orc.address}`);
+
+    const penalty = await deploy("Penalty", {
+        from : owner,
+        args: [],
+        log: true,
+    });
+    console.log(`penalty: ${penalty.address}`);
 };
 export default func;
 func.tags = ["vault"];
