@@ -67,20 +67,7 @@ interface INodeRegistry {
         bytes[] calldata _invalidSignaturePubkey
     ) external;
 
-    // return validator struct for a validator Id
-    function validatorRegistry(uint256)
-        external
-        view
-        returns (
-            ValidatorStatus status,
-            bytes calldata pubkey,
-            bytes calldata preDepositSignature,
-            bytes calldata depositSignature,
-            address withdrawVaultAddress,
-            uint256 operatorId,
-            uint256 depositTime,
-            uint256 withdrawnTime
-        );
+
 
     // returns the operator struct given operator Id
     function operatorStructById(uint256)
@@ -149,7 +136,7 @@ interface INodeRegistry {
 
 
 
-    function validatorIdByPubkey(bytes calldata _pubkey) external view returns (uint256);
+
 
     function validatorIdsByOperatorId(uint256, uint256) external view returns (uint256);
 
@@ -158,5 +145,18 @@ interface INodeRegistry {
     function nextOperatorId() external view returns (uint256);
     function nextValidatorId() external view returns (uint256);
     function totalActiveValidatorCount() external view returns (uint256);
+
+    //Mappings
+    function validatorRegistry(uint256) external view returns (
+        ValidatorStatus status,
+        bytes calldata pubkey,
+        bytes calldata preDepositSignature,
+        bytes calldata depositSignature,
+        address withdrawVaultAddress,
+        uint256 operatorId,
+        uint256 depositTime,
+        uint256 withdrawnTime
+    );
+    function validatorIdByPubkey(bytes calldata _pubkey) external view returns (uint256);
 
 }

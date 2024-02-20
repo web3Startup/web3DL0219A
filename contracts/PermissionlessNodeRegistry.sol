@@ -43,4 +43,13 @@ abstract contract PermissionlessNodeRegistry is
     uint256 public override validatorQueueSize;
     uint256 public override nextQueuedValidatorIndex;
     uint256 public constant override FRONT_RUN_PENALTY = 3 ether;
+
+    /* not override */
+    uint256 public constant COLLATERAL_ETH = 4 ether;
+
+    /* @inheritdoc INodeRegistry.sol */
+    mapping(uint256 => Validator) public override validatorRegistry;
+    mapping(bytes => uint256) public override validatorIdByPubkey;
+
+
 }
