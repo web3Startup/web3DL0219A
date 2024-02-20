@@ -40,4 +40,16 @@ contract Penalty is AccessControlUpgradeable, ReentrancyGuardUpgradeable {
     function updateMEVTheftPenaltyPerStrike(uint256 _mevTheftPenaltyPerStrike) external onlyRole(MANAGER_ROLE) {
         mevTheftPenaltyPerStrike = _mevTheftPenaltyPerStrike;
     }
+
+    function updateMissedAttestationPenaltyPerStrike(uint256 _missedAttestationPenaltyPerStrike) external onlyRole(MANAGER_ROLE) {
+        missedAttestationPenaltyPerStrike = _missedAttestationPenaltyPerStrike;
+    }
+
+    function updateValidatorExitPenaltyThreshold(uint256 _validatorExitPenaltyThreshold) external onlyRole(MANAGER_ROLE) {
+        validatorExitPenaltyThreshold = _validatorExitPenaltyThreshold;
+    }
+
+    function updateRatedOracleAddress(address _ratedOracleAddress) external onlyRole(MANAGER_ROLE) {
+        ratedOracleAddress = _ratedOracleAddress;
+    }
 }
