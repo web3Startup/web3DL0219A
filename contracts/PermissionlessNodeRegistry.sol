@@ -82,6 +82,7 @@ contract PermissionlessNodeRegistry is
         _grantRole(DEFAULT_ADMIN_ROLE, _admin);
     }
 
+    /* public functions */
     function onboardNodeOperator(
         bool _optInForSocializingPool,
         string calldata _operatorName,
@@ -110,6 +111,12 @@ contract PermissionlessNodeRegistry is
         //todo: add code
     }
 
+    /* settings */
+    function updateNextQueuedValidatorIndex(uint256 _nextQueuedValidatorIndex) external {
+        nextQueuedValidatorIndex = _nextQueuedValidatorIndex;
+        emit UpdatedNextQueuedValidatorIndex(nextQueuedValidatorIndex);
+    }
+
     function updateDepositStatusAndBlock(uint256 _validatorId) external override {
         //todo: add code
     }
@@ -118,17 +125,29 @@ contract PermissionlessNodeRegistry is
         //todo: add code
     }
 
-    // governance
+    /* settings */
     function updateInputKeyCountLimit(uint16 _inputKeyCountLimit) external override {
-//        UtilLib.onlyOperatorRole(msg.sender, staderConfig);
-//        inputKeyCountLimit = _inputKeyCountLimit;
-//        emit UpdatedInputKeyCountLimit(inputKeyCountLimit);
+        UtilLib.onlyOperatorRole(msg.sender, staderConfig);
+        inputKeyCountLimit = _inputKeyCountLimit;
+        emit UpdatedInputKeyCountLimit(inputKeyCountLimit);
     }
 
     function updateMaxNonTerminalKeyPerOperator(uint64 _maxNonTerminalKeyPerOperator) external override {
-//        UtilLib.onlyManagerRole(msg.sender, staderConfig);
-//        maxNonTerminalKeyPerOperator = _maxNonTerminalKeyPerOperator;
-//        emit UpdatedMaxNonTerminalKeyPerOperator(maxNonTerminalKeyPerOperator);
+        UtilLib.onlyManagerRole(msg.sender, staderConfig);
+        maxNonTerminalKeyPerOperator = _maxNonTerminalKeyPerOperator;
+        emit UpdatedMaxNonTerminalKeyPerOperator(maxNonTerminalKeyPerOperator);
+    }
+
+    function updateVerifiedKeysBatchSize(uint256 _verifiedKeysBatchSize) external {
+        UtilLib.onlyOperatorRole(msg.sender, staderConfig);
+        verifiedKeyBatchSize = _verifiedKeysBatchSize;
+        emit UpdatedVerifiedKeyBatchSize(_verifiedKeysBatchSize);
+    }
+
+    function updateStaderConfig(address _staderConfig) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        UtilLib.checkNonZeroAddress(_staderConfig);
+        staderConfig = IStaderConfig(_staderConfig);
+        emit UpdatedStaderConfig(_staderConfig);
     }
 
     function updateOperatorName(string calldata _operatorName) external override {
@@ -215,11 +234,5 @@ contract PermissionlessNodeRegistry is
     function unpause() external override {
 //        UtilLib.onlyManagerRole(msg.sender, staderConfig);
         _unpause();
-    }
-
-    function updateNextQueuedValidatorIndex(uint256 _nextQueuedValidatorIndex) external {
-        UtilLib.onlyStaderContract(msg.sender, staderConfig, staderConfig.PERMISSIONLESS_POOL());
-        nextQueuedValidatorIndex = _nextQueuedValidatorIndex;
-        emit UpdatedNextQueuedValidatorIndex(nextQueuedValidatorIndex);
     }
 }
