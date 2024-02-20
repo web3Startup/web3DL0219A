@@ -52,4 +52,8 @@ contract Penalty is AccessControlUpgradeable, ReentrancyGuardUpgradeable {
     function updateRatedOracleAddress(address _ratedOracleAddress) external onlyRole(MANAGER_ROLE) {
         ratedOracleAddress = _ratedOracleAddress;
     }
+
+    function updateStaderConfig(address _staderConfig) external onlyRole(MANAGER_ROLE) {
+        staderConfig = IStaderConfig(_staderConfig);
+    }
 }
