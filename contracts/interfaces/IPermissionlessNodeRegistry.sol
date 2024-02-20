@@ -24,13 +24,12 @@ interface IPermissionlessNodeRegistry {
     event UpdatedSocializingPoolState(uint256 operatorId, bool optedForSocializingPool, uint256 block);
     event TransferredCollateralToPool(uint256 amount);
 
-    //Getters
-
+    //Getters - param
     function validatorQueueSize() external view returns (uint256);
-
     function nextQueuedValidatorIndex() external view returns (uint256);
-
     function FRONT_RUN_PENALTY() external view returns (uint256);
+
+    // getters
 
     function queuedValidators(uint256) external view returns (uint256);
 

@@ -139,17 +139,24 @@ interface INodeRegistry {
 
     function inputKeyCountLimit() external view returns (uint16);
 
-    function nextOperatorId() external view returns (uint256);
 
-    function nextValidatorId() external view returns (uint256);
+
+
 
     function maxNonTerminalKeyPerOperator() external view returns (uint64);
 
-    function verifiedKeyBatchSize() external view returns (uint256);
 
-    function totalActiveValidatorCount() external view returns (uint256);
+
+
 
     function validatorIdByPubkey(bytes calldata _pubkey) external view returns (uint256);
 
     function validatorIdsByOperatorId(uint256, uint256) external view returns (uint256);
+
+    //Getters - param
+    function verifiedKeyBatchSize() external view returns (uint256);
+    function nextOperatorId() external view returns (uint256);
+    function nextValidatorId() external view returns (uint256);
+    function totalActiveValidatorCount() external view returns (uint256);
+
 }

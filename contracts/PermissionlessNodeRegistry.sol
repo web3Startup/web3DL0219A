@@ -26,5 +26,21 @@ abstract contract PermissionlessNodeRegistry is
     PausableUpgradeable,
     ReentrancyGuardUpgradeable
 {
+    uint8 public constant override POOL_ID = 1;
+    uint16 public override inputKeyCountLimit;
+    uint64 public override maxNonTerminalKeyPerOperator;
 
+    IStaderConfig public staderConfig;
+
+    // @custom:oz-upgrades-unsafe-allow constructor
+    /* inherit from INodeRegistry.sol */
+    uint256 public override verifiedKeyBatchSize;
+    uint256 public override nextOperatorId;
+    uint256 public override nextValidatorId;
+    uint256 public override totalActiveValidatorCount;
+
+    /* inherit from IPermissionlessNodeRegistry.sol */
+    uint256 public override validatorQueueSize;
+    uint256 public override nextQueuedValidatorIndex;
+    uint256 public constant override FRONT_RUN_PENALTY = 3 ether;
 }
