@@ -3,7 +3,7 @@ import {expect} from "chai";
 import {parseEther} from "ethers/lib/utils";
 
 describe("Vault", async () => {
-    let vault, ethx, auction, orc, penalty, owner,user0;
+    let vault, ethx, auction, orc, penalty, plnr, owner,user0;
     beforeEach(async () => {
         let fixture = await setupFixture();
         owner = fixture.owner;
@@ -13,6 +13,7 @@ describe("Vault", async () => {
         auction = fixture.auction;
         orc = fixture.orc;
         penalty = fixture.penalty;
+        plnr = fixture.plnr;
     });
 
     it("check ETHX.FUNC", async () => {
@@ -95,5 +96,10 @@ describe("Vault", async () => {
 
         await expect(p.getAdditionalPenaltyAmount(pubkey)).to.be.reverted;
     });
+
+    it("check pnr.func", async() => {
+        const p = plnr;
+        await p.initialize(owner.address, ethx.address);
+    })
 });
 

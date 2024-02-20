@@ -35,6 +35,13 @@ const func: DeployFunction = async function ({deployments, getNamedAccounts, net
         log: true,
     });
     console.log(`penalty: ${penalty.address}`);
+
+    const pnr = await deploy("PermissionlessNodeRegistry", {
+        from : owner,
+        args: [],
+        log: true,
+    });
+    console.log(`pnr: ${pnr.address}`);
 };
 export default func;
 func.tags = ["vault"];
