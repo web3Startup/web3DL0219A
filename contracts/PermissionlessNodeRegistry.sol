@@ -56,4 +56,9 @@ abstract contract PermissionlessNodeRegistry is
 
     /* @inheritdoc IPermissionlessNodeRegistry */
     mapping(uint256 => uint256) public override queuedValidators;
+    mapping(uint256 => address) public override nodeELRewardVaultByOperatorId;
+
+    /* native mappings */
+    mapping(uint256 => uint256) public socializingPoolStateChangeBlock;
+    mapping(uint256 => address) public proposedRewardAddressByOperatorId;
 }
